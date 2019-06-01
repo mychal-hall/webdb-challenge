@@ -16,6 +16,34 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Lists a project with a specific ID and it's associated actions -- GET /api/projects/:id
+router.get("/:id", async (req, res) => {
+  try {
+    const project = await Projects.getProjectById(req.params.id);
+    if (project.length) {
+      const actionsRelated = project.map(item => {
+        const action = { name: item.action };
+        return action;
+      });
+      const projectRelated = {
+        id: project[0].id,
+        name: project[0].project,
+        actions: actionsRelated
+      };
+      res.status(200).json(projectRelated);
+    } else {
+      res.status(404).json({ message: "No project exists with that ID" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({
+        message: "The project could not be found. Is the server broken!?"
+      });
+  }
+});
+
 // Adds a project to the database -- POST /api/projects/
 router.post("/", validateProject, async (req, res) => {
   try {
