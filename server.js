@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 // Put the dang routers right here!!
+const projectRouter = require("./projects/projects-router.js");
 
 const server = express();
 
@@ -11,6 +12,7 @@ server.use(helmet());
 server.use(morgan("tiny"));
 
 // ROUTER PATHSSSSS
+server.use("/api/projects", projectRouter);
 
 // Trash online test
 server.get("/", (req, res) => {
