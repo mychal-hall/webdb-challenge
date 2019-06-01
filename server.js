@@ -4,6 +4,7 @@ const morgan = require("morgan");
 
 // Put the dang routers right here!!
 const projectRouter = require("./projects/projects-router.js");
+const actionRouter = require("./actions/actions-router.js");
 
 const server = express();
 
@@ -13,6 +14,7 @@ server.use(morgan("tiny"));
 
 // ROUTER PATHSSSSS
 server.use("/api/projects", projectRouter);
+server.use("/api/actions", actionRouter);
 
 // Trash online test
 server.get("/", (req, res) => {
